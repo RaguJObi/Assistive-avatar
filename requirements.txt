@@ -1,0 +1,10 @@
+pyaudio
+deepgram-sdk==3.4.0
+google-generativeai
+python-dotenv
+chromadb
+sentence-transformers
+opencv-python
+fuzzywuzzy
+python-Levenshtein
+colorama

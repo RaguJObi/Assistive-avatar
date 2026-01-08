@@ -1,0 +1,48 @@
+Role: Senior AI Engineer specializing in low-latency voice systems. 
+Objective: Build a Python-based Streaming Speech-to-Speech (S2S) Pipeline that transcribes live microphone input, retrieves data from an IITM startup directory (RAG), and synthesizes a high-quality voice response in real-time.
+
+The Workflow to Implement:
+
+Ingest: Capture live audio from the default system microphone using PyAudio.
+
+STT (Streaming): Use Deepgram Nova-3 (or OpenAI Whisper) to transcribe audio chunks in real-time via WebSockets.
+
+RAG Logic: Query data/iitmrp_directory.json using the transcribed text to extract startup details.
+
+LLM (Streaming): Feed the transcript + context into GPT-4o-mini. Stream the text tokens.
+
+TTS (Streaming): Send the text tokens as they are generated to ElevenLabs Flash or Cartesia Sonic to generate audio chunks.
+
+Output: Play the resulting audio chunks immediately through the system speakers using a non-blocking stream.
+
+Technical Constraints:
+
+Zero-Wait Policy: Use asynchronous programming (asyncio) and WebSockets.
+
+Latency Benchmarking: The code must measure and print:
+
+VAD Detection Delay (When the system realizes you stopped talking).
+
+STT Transcription Delay.
+
+TTFT (Time to First Token) from LLM.
+
+TTFA (Time to First Audio) from TTS.
+
+Persona: "Director of IITM Research Park." Brief, high-impact, and helpful.
+
+Project Structure:
+
+main.py: The entry point that orchestrates the stream.
+
+services/stt_service.py: Handles Deepgram WebSocket connection.
+
+services/tts_service.py: Handles streaming audio playback.
+
+services/rag_engine.py: Logic to search the JSON directory.
+
+utils/audio_utils.py: PyAudio configuration for mic and speakers.
+
+Instructions for Cursor: "Implement this pipeline step-by-step. Start by setting up the PyAudio mic input and the Deepgram STT stream. Once transcription works, add the RAG and LLM streaming logic. Finally, implement the TTS playback. Ensure that audio playback starts as soon as the first sentence is ready from the LLM. Provide a requirements.txt with all necessary libraries like pyaudio, deepgram-sdk, openai, and elevenlabs."
+
+Now that I have my Gemini API, please integrate the Deepgram WebSocket for transcription and the ElevenLabs Streaming API for voice. Ensure the tts_service.py is set up to handle 'chunked' audio playback so the character starts talking immediately."

@@ -1,0 +1,33 @@
+Semantic Search with ChromaDB
+Unlike keyword search which matches exact words, semantic search understands the intent and context. For example, if a user asks about "chip design," semantic search will correctly identify "Mindgrove Technologies" even if the word "chip" isn't in their description.
+
+Cursor Prompt for Semantic Search Module:
+
+"Upgrade the current rag_engine.py to use ChromaDB for semantic search.
+
+Setup: Initialize a local persistent ChromaDB client.
+
+Embedding: Use SentenceTransformer('all-MiniLM-L6-v2') or OpenAI's text-embedding-3-small to convert the iitmrp_directory.json into vector embeddings.
+
+Collection: Create a collection called iitm_startups and add all startup data with their descriptions as the searchable content.
+
+Query: Implement a query_directory function that takes a user's natural language string, generates its embedding, and returns the top 3 most semantically similar startups.
+
+Hybrid Fallback: If the similarity score is below a threshold (e.g., 0.4), return a friendly default response."
+
+2. Webcam Presence Detection (The Trigger)
+To initiate the conversation automatically, you need a lightweight vision loop using OpenCV that detects when a human face is in frame.
+
+Cursor Prompt for Vision Trigger Module:
+
+"Create a new file services/vision_service.py using OpenCV to detect user presence.
+
+Capture: Open the default webcam stream (cv2.VideoCapture(0)).
+
+Detection: Use the haarcascade_frontalface_default.xml classifier to detect faces in real-time.
+
+Logic: If a face is detected consistently for more than 2 seconds (to avoid glitches), trigger a 'PresenceDetected' event.
+
+Interaction Trigger: When the event fires, call the main orchestrator to have the digital human say: 'Hello! Welcome to the IITM Research Park. I am the Director's AI assistant. How can I guide you today?'
+
+Debounce: Ensure the trigger only fires once per user (e.g., wait for the person to leave the frame before resetting the trigger)."
